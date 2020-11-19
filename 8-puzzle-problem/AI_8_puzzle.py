@@ -141,7 +141,7 @@ class Puzzle:
                     current = self.open_list[0]
                     self.nodes_visited += 1
                     if (self.misplaced_h(current.data,goal) == 0):
-                        founded = current
+                        found = current
                         break
                     for i in current.generate_child():
                         if current.parent != None:
@@ -172,7 +172,7 @@ class Puzzle:
                 current = self.open_list[0]
                 self.nodes_visited += 1
                 if (self.manhattan_h(current.data, goal) == 0):
-                    founded = current
+                    found = current
                     break
                 for i in current.generate_child():
                     if current.parent != None:
@@ -200,27 +200,27 @@ class Puzzle:
 
         t1 = time.time()
 
-        self.print_path(start,founded)
+        self.print_path(start,found)
         print("")
         print("Nodes generated: ", self.nodes_generated)
         print("Nodes visited: ", self.nodes_visited)
         print("Steps to reach goal: ",self.steps)
         print("Wall time: ",t1-t0)
 
-    def print_path(self, start, founded):
-        if start.data == founded.data:
+    def print_path(self, start, found):
+        if start.data == found.data:
             print("---------------------")
             for i in start.data:
                 for j in i:
                     print(j, end=" ")
                 print("")
-        elif founded.parent == None:
+        elif found.parent == None:
             print("No parent")
         else:
             self.steps += 1
-            self.print_path(start, founded.parent)
+            self.print_path(start, found.parent)
             print("---------------------")
-            for i in founded.data:
+            for i in found.data:
                 for j in i:
                     print(j, end=" ")
                 print("")
@@ -228,5 +228,5 @@ class Puzzle:
 
 
 puzzle = Puzzle(3)
-founded = puzzle.process()
+found = puzzle.process()
 
